@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Profile;
 import com.elevenidias.xedfit.entities.PersonalTrainer;
 import com.elevenidias.xedfit.entities.Student;
 import com.elevenidias.xedfit.repositories.PersonalTrainerRepository;
-import com.elevenidias.xedfit.repositories.ScheduledClassRepository;
 import com.elevenidias.xedfit.repositories.StudentRepository;
 
 @Configuration
@@ -24,9 +23,6 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private PersonalTrainerRepository personalTrainerRepository;
-	
-	@Autowired
-	private ScheduledClassRepository scheduledClassRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
