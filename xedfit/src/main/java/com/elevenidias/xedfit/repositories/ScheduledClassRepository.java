@@ -6,5 +6,5 @@ import com.elevenidias.xedfit.entities.ScheduledClass;
 import com.elevenidias.xedfit.entities.pk.ScheduledClassPK;
 
 public interface ScheduledClassRepository extends JpaRepository<ScheduledClass, ScheduledClassPK>{
-	
+
 }
