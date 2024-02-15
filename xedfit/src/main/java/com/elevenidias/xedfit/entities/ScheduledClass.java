@@ -1,8 +1,10 @@
 package com.elevenidias.xedfit.entities;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import com.elevenidias.xedfit.entities.pk.ScheduledClassPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -13,24 +15,23 @@ import jakarta.persistence.Table;
 public class ScheduledClass {
 	
 	@EmbeddedId
-	private ScheduledClassPK id;
+	private ScheduledClassPK id = new ScheduledClassPK();
 	private LocalDateTime scheduledTime;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
-	private Integer duration;
+	private Long duration;
 	
 	public ScheduledClass() {
 		
 	}
 	public ScheduledClass(Student student, PersonalTrainer personalTrainer, LocalDateTime scheduledTime, LocalDateTime startTime,
-			LocalDateTime endTime, Integer duration) {
+			LocalDateTime endTime) {
 		super();
 		id.setStudent(student);
 		id.setPersonalTrainer(personalTrainer);
 		this.scheduledTime = scheduledTime;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.duration = duration;
 	}
 	
 	public Student getStudent() {
@@ -39,6 +40,7 @@ public class ScheduledClass {
 	public void setStudent(Student student) {
 		id.setStudent(student);
 	}
+	@JsonIgnore
 	public PersonalTrainer getPersonalTrainer() {
 		return id.getPersonalTrainer();
 	}
@@ -63,11 +65,16 @@ public class ScheduledClass {
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
-	public Integer getDuration() {
+	public Long getDuration() {
 		return duration;
 	}
-	public void setDuration(Integer duration) {
+	public void setDuration(Long duration) {
 		this.duration = duration;
-	}	
+	}
+	
+	public Long duration() {
+		Duration duration = Duration.between(getStartTime(), getEndTime());
+		return duration.toHours();
+	}
 	
 }

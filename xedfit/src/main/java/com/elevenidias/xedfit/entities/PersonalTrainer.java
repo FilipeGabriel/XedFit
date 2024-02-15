@@ -3,12 +3,15 @@ package com.elevenidias.xedfit.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +31,9 @@ public class PersonalTrainer implements Serializable{
 	private String telephone;
 	private String email;
 	private LocalDate birthDate;
+	
+	@OneToMany(mappedBy = "id.personalTrainer")
+	private List<ScheduledClass> classes = new ArrayList<>();
 	
 	public PersonalTrainer() {
 		
@@ -99,6 +105,9 @@ public class PersonalTrainer implements Serializable{
 	}
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}	
+	public List<ScheduledClass> getClasses() {
+		return classes;
 	}
 	
 	@Override

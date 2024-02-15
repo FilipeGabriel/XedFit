@@ -2,6 +2,8 @@ package com.elevenidias.xedfit.config;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +12,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.elevenidias.xedfit.entities.PersonalTrainer;
+import com.elevenidias.xedfit.entities.ScheduledClass;
 import com.elevenidias.xedfit.entities.Student;
 import com.elevenidias.xedfit.repositories.PersonalTrainerRepository;
+import com.elevenidias.xedfit.repositories.ScheduledClassRepository;
 import com.elevenidias.xedfit.repositories.StudentRepository;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
 	
+	DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	
 	@Autowired
 	private StudentRepository studentRepository;
 	
 	@Autowired
 	private PersonalTrainerRepository personalTrainerRepository;
+	
+	@Autowired
+	private ScheduledClassRepository scheduledClassRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -42,6 +51,24 @@ public class TestConfig implements CommandLineRunner{
 		
 		studentRepository.saveAll(Arrays.asList(s1, s2, s3, s4, s5, s6));
 		personalTrainerRepository.saveAll(Arrays.asList(pt1, pt2, pt3, pt4, pt5));
+		
+		ScheduledClass sc1 = new ScheduledClass(s6, pt5, LocalDateTime.parse("22/04/2024 11:00", dtf2), LocalDateTime.parse("22/04/2024 11:00", dtf2), LocalDateTime.parse("22/04/2024 12:00", dtf2));
+		ScheduledClass sc2 = new ScheduledClass(s1, pt4, LocalDateTime.parse("22/04/2024 17:00", dtf2), LocalDateTime.parse("22/04/2024 17:00", dtf2), LocalDateTime.parse("22/04/2024 18:00", dtf2));
+		ScheduledClass sc3 = new ScheduledClass(s2, pt4, LocalDateTime.parse("23/04/2024 13:00", dtf2), LocalDateTime.parse("23/04/2024 13:00", dtf2), LocalDateTime.parse("23/04/2024 14:00", dtf2));
+		ScheduledClass sc4 = new ScheduledClass(s3, pt1, LocalDateTime.parse("23/04/2024 15:00", dtf2), LocalDateTime.parse("23/04/2024 15:00", dtf2), LocalDateTime.parse("23/04/2024 16:00", dtf2));
+		ScheduledClass sc5 = new ScheduledClass(s5, pt1, LocalDateTime.parse("23/04/2024 08:00", dtf2), LocalDateTime.parse("23/04/2024 08:00", dtf2), LocalDateTime.parse("23/04/2024 09:00", dtf2));
+		ScheduledClass sc6 = new ScheduledClass(s4, pt3, LocalDateTime.parse("24/04/2024 10:00", dtf2), LocalDateTime.parse("24/04/2024 10:00", dtf2), LocalDateTime.parse("24/04/2024 11:00", dtf2));
+		ScheduledClass sc7 = new ScheduledClass(s1, pt2, LocalDateTime.parse("24/04/2024 12:00", dtf2), LocalDateTime.parse("24/04/2024 12:00", dtf2), LocalDateTime.parse("24/04/2024 13:00", dtf2));
 				
+		sc1.setDuration(sc1.duration());
+		sc2.setDuration(sc2.duration());
+		sc3.setDuration(sc3.duration());
+		sc4.setDuration(sc4.duration());
+		sc5.setDuration(sc5.duration());
+		sc6.setDuration(sc6.duration());
+		sc7.setDuration(sc7.duration());
+		
+		scheduledClassRepository.saveAll(Arrays.asList(sc1, sc2, sc3, sc4, sc5, sc6, sc7));
+		
 	}	
 }
